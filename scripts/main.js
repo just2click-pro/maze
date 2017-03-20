@@ -187,6 +187,58 @@
 		return moveData.character;
 	}
 
+	function renderMazeOnPage() {
+		for (var i = 0; i < maze.length; i++) {
+			for (var j = 0; j < maze[0].length; j++) {
+				var renderThis = document.createElement('div');
+				if (maze[i][j] == -1) {
+					renderThis.setAttribute('class', 'wall-block');
+				} else if (maze[i][j] === 0) {
+					renderThis.setAttribute('class', 'empty-space animtae');
+					renderThis.setAttribute('id', 'pos_' + i + '_' + j);
+				} else if (maze[i][j] === 99) {
+					var targetImage = document.createElement('img');
+					targetImage.setAttribute('src', '../resources/images/cheese.png');
+					targetImage.setAttribute('style', 'height: 21px; width: 21px; margin: -4px 0 4px;');
+					renderThis.setAttribute('class', 'empty-space animate');
+					renderThis.appendChild(targetImage);
+				}
+
+				mazeContainer.appendChild(renderThis);
+			}
+		}
+	}
+
+	function unRenderChaeacter(lastPosition) {
+		var footstepsCube = document.querySelector('#pos_' + lastPosition.y + '_' + lastPosition.x);
+		// footstepsCube.removeChild(footstepsCube.childNodes[0]);
+	}
+
+	function renderChaeacter (character) {
+		var y = character.position.y,
+			x = character.position.x,
+			facing = character.facing;
+
+		var characterCube = $('#pos_' + y + '_' + x);
+		if (characterCube) {
+			switch (facing) {
+				case 'south':
+					characterImage.setAttribute('class', 'character-south');
+					break;
+				case 'west':
+					characterImage.setAttribute('class', 'character-west');
+					break;
+				case 'north':
+					characterImage.setAttribute('class', 'character-north');
+					break;
+				case 'east':
+					characterImage.setAttribute('class', 'character-east');
+					break;
+			}
+			characterCube.append(characterImage).delay(1000);
+		}
+	}
+
 	function renderMaze() {
 		for (var i = 0; i < maze.length; i++) {
 			var line = '';
@@ -205,20 +257,47 @@
 		console.log(' ');
 	}
 
+	function wait() {
+		for (var i = 0; i < 100; i++) {
+			console.log('1');
+		}
+	}
+
+	function resetMaze() {
+		character = {
+				facing: 'west',
+				position: {
+					y: 0, x: 1 	// Initial positions, maze enterance
+				}
+			};
+	}
+
 	function startMaze() {
+		resetMaze();
 		var steps = 0;
 		while ((maze[character.position.y][character.position.x] !== 99) && (steps < 80)) {
 			if (maze[character.position.y][character.position.x] == 99) { break; }
 			var preserveValue = maze[character.position.y][character.position.x];
+			var preservePosition = character.position;
 			maze[character.position.y][character.position.x] = '*';
 			renderMaze();
 			steps++;
 			character = move({ character: character, originalValue: preserveValue });
+			renderChaeacter(character);
+			//unRenderChaeacter(preservePosition);
+
 			console.log('Steps: ', steps);
 		}
 	}
 
-	var btn = document.querySelector('button');
+	var mazeContainer = document.querySelector('.maze-container');
+	var characterImage = document.createElement('img');
+		characterImage.src = '../resources/images/mouse.png';
+		characterImage.setAttribute('style', 'height: 21px; width: 21px; margin: -4px 0 4px;');
+
+	var btn = document.querySelector('#start-button');
 	btn.addEventListener('click', startMaze);
 
+	renderMazeOnPage();
+	renderChaeacter (character);
 }());

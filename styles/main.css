@@ -3,7 +3,7 @@ html, body {
 	font-size: 15px;
 	line-height: 22px;
 	margin: 0;
-	padding: 0;
+	padding: 50px 0 0 0;
 }
 
 * {
@@ -16,4 +16,65 @@ a, a:hover {
 	color: #428bca;
   text-decoration: none;
   pointer-events: all !important;
+}
+
+.starter-template {
+  padding: 40px 15px;
+  text-align: center;
+}
+
+.navbar-header .logo {
+	display: inline;
+	height: 24px;
+}
+
+.starter-template .maze-container {
+	border-top: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+  border-bottom: 1px solid #000;
+  border-right: 1px solid #000;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.75);
+  height: 250px;
+  margin: 20px auto;
+  width: 240px;
+  padding: 5px 4px;
+}
+
+.maze-container .wall-block {
+	background: url(../resources/images/bricks.jpeg) no-repeat;
+  display: inline-block;
+  height: 23px;
+  margin: -4px 0 -4px 0;
+  width: 23px;
+}
+
+.maze-container .empty-space {
+    display: inline-block;
+    height: 23px;
+    width: 23px;
+    margin: -4px 0 -4px 0;
+}
+
+.animate {
+	animation-duration: 5s;
+  animation-timing-function: linear;
+  animation-delay: 2s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+.character-south {
+	transform: rotate(45deg);
+}
+
+.character-west {
+	transform: rotate(135deg);
+}
+
+.character-north {
+	transform: rotate(225deg);
+}
+
+.character-east {
+	transform: rotate(315deg);
 }
