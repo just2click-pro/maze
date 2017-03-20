@@ -1,0 +1,11 @@
+{
+  "name": "maze",
+  "version": "1.0.0",
+  "description": "A Maze Homework assignment",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Dror Avidov @just2click",
+  "license": "MIT"
+}
