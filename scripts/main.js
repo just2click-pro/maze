@@ -352,7 +352,7 @@
 
 	var mazeContainer = document.querySelector('.maze-container');
 	var characterImage = document.createElement('img');
-		characterImage.src = '../resources/images/mouse.png';
+		characterImage.src = 'resources/images/mouse.png';
 		characterImage.setAttribute('style', 'height: 21px; width: 21px; margin: -4px 0 4px;');
 
 	var btn = document.querySelector('#start-button');
