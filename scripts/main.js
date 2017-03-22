@@ -198,7 +198,7 @@
 					renderThis.setAttribute('id', 'pos_' + i + '_' + j);
 				} else if (maze[i][j] === 99) {
 					var targetImage = document.createElement('img');
-					targetImage.setAttribute('src', '../resources/images/cheese.png');
+					targetImage.setAttribute('src', 'resources/images/cheese.png');
 					targetImage.setAttribute('style', 'height: 21px; width: 21px; margin: -4px 0 4px;');
 					renderThis.setAttribute('class', 'empty-space animate');
 					renderThis.appendChild(targetImage);
@@ -215,7 +215,7 @@
 
 		if (footstepsCube.children.length === 0) {
 			var footstepsImage = document.createElement('img');
-				footstepsImage.src = '../resources/images/footsteps.png';
+				footstepsImage.src = 'resources/images/footsteps.png';
 				footstepsImage.setAttribute('style', 'height: 21px; width: 21px; margin: -4px 0 4px;');
 
 			footstepsCube.append(footstepsImage);
