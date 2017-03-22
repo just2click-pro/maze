@@ -4,17 +4,17 @@
 	var maze = [
 	//						East
 	//  0, 1, 2, 3, 4, 5, 6, 7, 8, 9
-		[-1, 0,-1,-1,-1,-1,-1,-1,-1,-1], 	// 0
-		[-1, 0,-1, 0, 0, 0,-1,-1, 0,-1], 	// 1
-		[-1, 0,-1, 0,-1, 0,-1, 0, 0,-1], 	// 2
-		[-1, 0,-1, 0,-1, 0,-1, 0,-1,-1], 	// 3
-		[-1, 0, 0, 0,-1, 0,-1, 0, 0,-1], 	// 4
-		[-1,-1,-1,-1,-1, 0,-1,-1, 0,-1], 	// 5
-		[-1, 0, 0, 0, 0, 0,-1, 0, 0,-1], 	// 6
-		[-1, 0,-1,-1,-1,-1,-1, 0, 0,-1], 	// 7
-		[-1, 0,-1,-1,-1,-1,-1,-1,-1,-1], 	// 8
-		[-1, 0, 0, 0, 0, 0, 0, 0, 0,-1], 	// 9
-		[-1,-1,-1,-1,-1,-1,-1,-1,99,-1] 	// 10
+		[-1, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1], 	// 0
+		[-1, 0,-1, 0, 0, 0,-1, 0, 0, 0, 0,-1], 	// 1
+		[-1, 0,-1, 0,-1, 0,-1, 0,-1,-1, 0,-1], 	// 2
+		[-1, 0,-1, 0,-1, 0,-1, 0,-1,-1, 0,-1], 	// 3
+		[-1, 0, 0, 0,-1, 0,-1, 0, 0,-1, 0,-1], 	// 4
+		[-1,-1,-1,-1,-1, 0,-1,-1, 0,-1, 0,-1], 	// 5
+		[-1, 0, 0, 0, 0, 0, 0, 0, 0,-1, 0,-1], 	// 6
+		[-1, 0,-1,-1,-1,-1,-1,-1, 0,-1,-1,-1], 	// 7
+		[-1, 0,-1,-1,-1,-1, 0,-1, 0, 0, 0,-1], 	// 8
+		[-1, 0, 0, 0, 0, 0, 0,-1,-1,-1, 0,-1], 	// 9
+		[-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,99,-1] 	// 10
 	//						West
 	];
 
@@ -32,16 +32,16 @@
 		var hasWall = false;
 		switch (character.facing) {
 			case 'south':
-				hasWall = maze[character.position.y + 1][character.position.x] == -1; // west of me
+				hasWall = maze[character.position.y + 1][character.position.x] < 0; // west of me
 				break;
 			case 'west':
-				hasWall = maze[character.position.y][character.position.x + 1] == -1; // south of me
+				hasWall = maze[character.position.y][character.position.x + 1] < 0; // south of me
 				break;
 			case 'north':
-				hasWall = maze[character.position.y - 1][character.position.x] == -1; // east of me
+				hasWall = maze[character.position.y - 1][character.position.x] < 0; // east of me
 				break;
 			case 'east':
-				hasWall = maze[character.position.y][character.position.x + 1] == -1; // north of me
+				hasWall = maze[character.position.y][character.position.x + 1] < 0; // north of me
 				break;
 		}
 		return hasWall;
@@ -51,16 +51,16 @@
 		var hasWall = false;
 		switch (character.facing) {
 			case 'south':
-				hasWall = maze[character.position.y][character.position.x + 1] == -1;
+				hasWall = maze[character.position.y][character.position.x + 1] < 0;
 				break;
 			case 'west':
-				hasWall = maze[character.position.y + 1][character.position.x] == -1;
+				hasWall = maze[character.position.y + 1][character.position.x] < 0;
 				break;
 			case 'north':
-				hasWall = maze[character.position.y][character.position.x - 1] == -1;
+				hasWall = maze[character.position.y][character.position.x - 1] < 0;
 				break;
 			case 'east':
-				hasWall = maze[character.position.y - 1][character.position.x] == -1;
+				hasWall = maze[character.position.y - 1][character.position.x] < 0;
 				break;
 		}
 		return hasWall;
@@ -70,16 +70,16 @@
 		var hasWall = false;
 		switch (character.facing) {
 			case 'south':
-				hasWall = maze[character.position.y - 1][character.position.x] == -1; // east of me
+				hasWall = maze[character.position.y - 1][character.position.x] < 0; // east of me
 				break;
 			case 'west':
-				hasWall = maze[character.position.y][character.position.x - 1] == -1; // north of me
+				hasWall = maze[character.position.y][character.position.x - 1] < 0; // north of me
 				break;
 			case 'north':
-				hasWall = maze[character.position.y + 1][character.position.x] == -1; // west of me
+				hasWall = maze[character.position.y + 1][character.position.x] < 0; // west of me
 				break;
 			case 'east':
-				hasWall = maze[character.position.y][character.position.x + 1] == -1; // south of me
+				hasWall = maze[character.position.y][character.position.x + 1] < 0; // south of me
 				break;
 		}
 		return hasWall;
@@ -175,10 +175,10 @@
 
 	function move(moveData) {
 		maze[moveData.character.position.y][moveData.character.position.x] = ++moveData.originalValue;
-		if (!toMyRight(moveData.character)) {
-			moveData.character = turnRight(moveData.character);
-		} else if (!inFrontOfMe(moveData.character)) {
+		if (!inFrontOfMe(moveData.character)) {
 			moveData.character =  goForward(moveData.character);
+		} else if (!toMyRight(moveData.character)) {
+			moveData.character = turnRight(moveData.character);
 		} else if (!toMyLeft(character)) {
 			moveData.character = turnLeft(moveData.character);
 		} else {
@@ -209,18 +209,59 @@
 		}
 	}
 
-	function unRenderChaeacter(lastPosition) {
-		var footstepsCube = document.querySelector('#pos_' + lastPosition.y + '_' + lastPosition.x);
-		// footstepsCube.removeChild(footstepsCube.childNodes[0]);
+	function renderFootsteps(lastCharacter) {
+		var footstepsCube =
+			document.querySelector('#pos_' + lastCharacter.position.y + '_' + lastCharacter.position.x);
+
+		if (footstepsCube.children.length === 0) {
+			var footstepsImage = document.createElement('img');
+				footstepsImage.src = '../resources/images/footsteps.png';
+				footstepsImage.setAttribute('style', 'height: 21px; width: 21px; margin: -4px 0 4px;');
+
+			footstepsCube.append(footstepsImage);
+
+			if (footstepsCube) {
+				switch (lastCharacter.facing) {
+					case 'south':
+						footstepsImage.setAttribute('class', 'footsteps-south footsteps');
+						break;
+					case 'west':
+						footstepsImage.setAttribute('class', 'footsteps-west footsteps');
+						break;
+					case 'north':
+						footstepsImage.setAttribute('class', 'footsteps-north footsteps');
+						break;
+					case 'east':
+						footstepsImage.setAttribute('class', 'footsteps-east footsteps');
+						break;
+				}
+			}
+
+			var classes = footstepsImage.getAttribute('class');
+
+			switch (maze[lastCharacter.position.y][lastCharacter.position.x]) {
+				case 1:
+					footstepsImage.setAttribute('class', classes + ' footsteps-1');
+					break;
+				case 2:
+					footstepsImage.setAttribute('class', classes + ' footsteps-2');
+					break;
+			}
+		}
 	}
 
-	function renderChaeacter (character) {
+	function renderChaeacter (character, callback) {
 		var y = character.position.y,
 			x = character.position.x,
 			facing = character.facing;
 
-		var characterCube = $('#pos_' + y + '_' + x);
+		var characterCube = document.querySelector('#pos_' + y + '_' + x);
 		if (characterCube) {
+			var hasFootsteps = characterCube.childNodes[0];
+			if (hasFootsteps) {
+				characterCube.removeChild(hasFootsteps);
+			}
+
 			switch (facing) {
 				case 'south':
 					characterImage.setAttribute('class', 'character-south');
@@ -235,7 +276,11 @@
 					characterImage.setAttribute('class', 'character-east');
 					break;
 			}
-			characterCube.append(characterImage).delay(1000);
+			characterCube.appendChild(characterImage);
+		}
+
+		if (callback) {
+			callback(arguments[2]); // Take the last object which is waht we want
 		}
 	}
 
@@ -257,12 +302,6 @@
 		console.log(' ');
 	}
 
-	function wait() {
-		for (var i = 0; i < 100; i++) {
-			console.log('1');
-		}
-	}
-
 	function resetMaze() {
 		character = {
 				facing: 'west',
@@ -272,22 +311,43 @@
 			};
 	}
 
+	function onDone() {
+		console.log('Done!');
+		var showMazeEnd = setTimeout(function () {
+			var mazeEnd = document.querySelector('.maze-end');
+			mazeEnd.setAttribute('class', 'maze-end show');
+
+			clearTimeout(showMazeEnd);
+		}, 1000);
+	}
+
+	function asyncWait(wait, callback) {
+		var waitTimeout = setTimeout(function () {
+			if (maze[character.position.y][character.position.x] == 99) {
+				onDone();
+			} else {
+				callback();
+			}
+			clearTimeout(waitTimeout);
+		}, wait);
+	}
+
+	function nextMove () {
+		var preserveValue = maze[character.position.y][character.position.x];
+		var preserveCharacter = JSON.parse(JSON.stringify(character)); // Have to clone object
+		maze[character.position.y][character.position.x] = '*';
+		renderMaze();
+		character = move({ character: character, originalValue: preserveValue });
+		renderChaeacter(character, renderFootsteps, preserveCharacter);
+		asyncWait(1000, nextMove);
+
+	}
+
 	function startMaze() {
 		resetMaze();
-		var steps = 0;
-		while ((maze[character.position.y][character.position.x] !== 99) && (steps < 80)) {
-			if (maze[character.position.y][character.position.x] == 99) { break; }
-			var preserveValue = maze[character.position.y][character.position.x];
-			var preservePosition = character.position;
-			maze[character.position.y][character.position.x] = '*';
-			renderMaze();
-			steps++;
-			character = move({ character: character, originalValue: preserveValue });
-			renderChaeacter(character);
-			//unRenderChaeacter(preservePosition);
+		renderChaeacter(character);
+		nextMove();
 
-			console.log('Steps: ', steps);
-		}
 	}
 
 	var mazeContainer = document.querySelector('.maze-container');
